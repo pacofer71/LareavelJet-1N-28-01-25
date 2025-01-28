@@ -4,6 +4,8 @@ namespace App\Livewire;
 
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -13,6 +15,7 @@ class ShowUserPosts extends Component
     public string $campo="id", $orden="desc";
     public string $cadena="";
 
+    #[On('onPostCreado')]    
     public function render()
     {
         $posts=Post::where('user_id', Auth::user()->id)
@@ -35,5 +38,20 @@ class ShowUserPosts extends Component
     public function ordenar(string $campo){
         $this->orden=($this->orden=='desc') ? 'asc' : 'desc';
         $this->campo=$campo;
+    }
+    //Para borrar posts --------------------------------------------
+    public function mostrarAlerta(Post $post){
+        $this->authorize('delete', $post);
+        $this->dispatch('alertaBorrar', $post->id);     
+    }
+    #[On('onBorrarConfirmado')]
+    public function destroy(Post $post){
+        $this->authorize('delete', $post);
+        if(basename($post->imagen!='default.webp')){
+            Storage::delete($post->imagen);
+        }
+        $post->delete();
+        $this->dispatch('mensaje', "Se eliminó el Post");
+
     }
 }

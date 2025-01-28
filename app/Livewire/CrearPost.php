@@ -23,4 +23,20 @@ class CrearPost extends Component
     public function abrirModal(){
         $this->openModalCrear=true;
     }
+    //---------------------------------------
+    public function store(){
+        $this->form->fGuardarPost();
+        //creamos un evento dirigido a la clase ShowUserPost
+        //Para notificar que se renderice
+        $this->dispatch('onPostCreado')->to(ShowUserPosts::class);
+        //creo un evento global para sweetalert 2
+        $this->dispatch('mensaje', "Se guardó el post");
+        
+        $this->cancelar();
+    }
+
+    public function cancelar(){
+        $this->openModalCrear=false;
+        $this->form->fLimpiar();
+    }
 }

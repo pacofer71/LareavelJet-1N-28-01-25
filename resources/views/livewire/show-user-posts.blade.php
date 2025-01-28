@@ -45,7 +45,7 @@
                         {{$item->estado}}
                     </td>
                     <td class="px-6 py-4">
-                        <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline">Remove</a>
+                        <button wire:click="mostrarAlerta({{$item->id}})"><i class="fas fa-trash text-red-500 text-lg hover:text-xl"></i></button>
                     </td>
                 </tr>
                 @endforeach
