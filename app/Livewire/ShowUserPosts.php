@@ -2,18 +2,26 @@
 
 namespace App\Livewire;
 
+use App\Livewire\Forms\FormUpdatePost;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 
 class ShowUserPosts extends Component
 {
     use WithPagination;
+    use WithFileUploads;
+
     public string $campo="id", $orden="desc";
     public string $cadena="";
+
+    public FormUpdatePost $uform;
+    public bool $abrirModalUpdate=false;
+
 
     #[On('onPostCreado')]    
     public function render()
@@ -53,5 +61,32 @@ class ShowUserPosts extends Component
         $post->delete();
         $this->dispatch('mensaje', "Se eliminó el Post");
 
+    }
+    //-------------------------------------------------------------
+    //Para editar el estado de un post
+    public function updateEstado(Post $post){
+        $this->authorize('update', $post);
+
+        $estado=($post->estado=='Publicado') ? 'Borrador' : 'Publicado';
+        $post->update([
+            'estado'=>$estado,
+        ]);
+    }
+    // Para actualizar un posts
+    public function edit(Post $post){
+        $this->authorize('update', $post);
+
+        $this->uform->setPost($post);
+        $this->abrirModalUpdate=true;
+
+    }
+    public function update(){
+        $this->uform->fUpdatePost();
+        $this->dispatch('mensaje', 'Post Editado');
+        $this->cancelar();  
+    }
+    public function cancelar(){
+        $this->abrirModalUpdate=false;
+        $this->uform->fCancelar();
     }
 }

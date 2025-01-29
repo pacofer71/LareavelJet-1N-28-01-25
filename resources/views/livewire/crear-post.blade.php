@@ -5,19 +5,20 @@
             Nuevo Post
         </x-slot>
         <x-slot name="content">
+
             <!-- Campo Título -->
             <div class="mb-4">
                 <label for="titulo" class="block text-gray-700 font-medium mb-2">Título</label>
-                <input type="text" id="titulo" name="titulo" wire:model="form.titulo" 
-                class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ingrese el título del post" required>
+                <input type="text" id="titulo" name="titulo" wire:model="form.titulo"
+                    class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ingrese el título del post" required>
                 <x-input-error for="form.titulo" />
             </div>
 
             <!-- Campo Contenido -->
             <div class="mb-4">
                 <label for="contenido" class="block text-gray-700 font-medium mb-2">Contenido</label>
-                <textarea id="contenido" name="contenido" rows="4" wire:model="form.contenido" 
-                class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Escribe el contenido del post" required></textarea>
+                <textarea id="contenido" name="contenido" rows="4" wire:model="form.contenido"
+                    class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Escribe el contenido del post" required></textarea>
                 <x-input-error for="form.contenido" />
             </div>
 
@@ -52,11 +53,12 @@
         </x-slot>
         <x-slot name="footer">
             <div class="flex justify-between">
-                <button type="submit" wire:click="store" wire:loading.attr="hidden" 
-                class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">Enviar</button>
+                <button type="button" wire:click="store" wire:loading.attr="hidden"
+                    class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">Enviar</button>
                 <button type="button" wire:click="cancelar" class=" mx-1 bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500">Cancelar</button>
-                <button type="reset" class="bg-yellow-500 text-white py-2 px-4 rounded-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500">Reset</button>
+                <button type="button" wire:click="resetCancelar" class="bg-yellow-500 text-white py-2 px-4 rounded-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500">Reset</button>
             </div>
         </x-slot>
+
     </x-dialog-modal>
 </div>

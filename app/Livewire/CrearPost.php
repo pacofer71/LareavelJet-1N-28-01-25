@@ -39,4 +39,7 @@ class CrearPost extends Component
         $this->openModalCrear=false;
         $this->form->fLimpiar();
     }
+    public function resetCancelar(){
+        $this->form->fLimpiar();
+    }
 }
